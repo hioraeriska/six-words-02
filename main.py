@@ -9,17 +9,28 @@ import os
 STORY = "I kept his voicemail. Still do."
 
 
-def validate_story(text):
-    """Gate: the bounty only judges a story of exactly six words, 1-60
-    characters, not only whitespace. Fail loudly here rather than silently
-    submitting a story that can never be judged."""
+def validate_length(text):
+    """Gate part 1: the story must be 1-60 characters."""
     if not (1 <= len(text) <= 60):
         raise ValueError("story must be 1-60 characters")
+
+
+def validate_content(text):
+    """Gate part 2: the story must be exactly six words, not only
+    whitespace."""
     if not text.strip():
         raise ValueError("story must not be only whitespace")
     words = text.split()
     if len(words) != 6:
         raise ValueError("story must be exactly six words")
+
+
+def validate_story(text):
+    """Gate: the bounty only judges a story of exactly six words, 1-60
+    characters, not only whitespace. Fail loudly here rather than silently
+    submitting a story that can never be judged."""
+    validate_length(text)
+    validate_content(text)
 
 
 def main():
